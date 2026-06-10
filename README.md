@@ -4,18 +4,6 @@ Focus Tab is a premium, local-first Chrome extension that replaces your browser'
 
 ---
 
-## Tech Stack Used
-
-- **Extension Framework:** Chrome Extension Manifest V3 (MV3)
-- **Network Interception:** `chrome.declarativeNetRequest` API (high-performance, privacy-preserving blocking)
-- **Event Tracking:** `chrome.webNavigation` API (for background block events analytics)
-- **Data Storage:** `chrome.storage.local` API (persisting preferences, tasks, and historical statistics)
-- **Frontend Presentation:** HTML5 & Vanilla CSS3 (CSS Custom Properties, Glassmorphic filters, responsive Grid/Flexbox layouts)
-- **Scripting & Dynamics:** Vanilla ES6+ JavaScript (including DOM manipulation, SVG drawing, and data file resizing)
-- **Vector Graphics:** Inline SVGs (used for circular progress gauges and distraction bar charts)
-
----
-
 ## Features
 
 ### 🕒 Shell & Clock
@@ -51,9 +39,7 @@ Focus Tab is a premium, local-first Chrome extension that replaces your browser'
 
 ```
 Focus-Tab/
-├── README.md              # Project documentation
-├── task.md                # Task list checklist
-├── focus-tab-prd.md       # Product Requirement Document
+├── README.md              # Project documentation 
 └── focus-tab/             # Extension source code
     ├── manifest.json      # Extension manifest (MV3)
     ├── background.js      # Background worker (blocking rules & analytics tracker)
