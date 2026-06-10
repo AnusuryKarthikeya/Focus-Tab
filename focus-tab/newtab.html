@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Focus Tab</title>
+
+  <!-- Fonts: Playfair Display (serif display) + JetBrains Mono (monospace UI) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="newtab.css">
+</head>
+<body>
+
+  <!-- Wallpaper background layer -->
+  <div id="wallpaper"></div>
+
+  <!-- Dark gradient overlay for text readability -->
+  <div id="wallpaper-overlay"></div>
+
+  <!-- Main two-column grid layout -->
+  <main class="dashboard">
+
+    <!-- Left column: greeting, clock, focus -->
+    <section class="col-left">
+
+      <!-- Top group: greeting -->
+      <div class="left-top">
+        <h1 id="greeting">Good evening, Friend.</h1>
+      </div>
+
+      <!-- Bottom group: clock, date, focus -->
+      <div class="left-bottom">
+        <div class="clock-group">
+          <div id="clock">00:00</div>
+          <div id="date-line">Sunday, 01 January 2026</div>
+        </div>
+
+        <div class="focus-group">
+          <span id="focus-label">TODAY'S FOCUS</span>
+          <p id="focus-display" class="empty">What will you focus on today?</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- Right column: task panel + focus mode panel -->
+    <section class="col-right">
+
+      <!-- Task panel (populated in Phase 2) -->
+      <div id="task-panel" class="glass-card">
+        <div class="panel-header">
+          <div class="panel-tabs">
+            <button type="button" id="tab-tasks" class="tab-btn active">Tasks</button>
+            <button type="button" id="tab-stats" class="tab-btn">Stats</button>
+          </div>
+          <span id="task-count">No tasks</span>
+        </div>
+        
+        <div id="tasks-content">
+          <ul id="task-list"></ul>
+          <div class="task-input-row">
+            <input type="text" id="task-input" placeholder="Add a task…" maxlength="120" autocomplete="off">
+            <button id="task-add-btn" title="Add task">+</button>
+          </div>
+        </div>
+
+        <div id="stats-content" style="display: none;">
+          <div class="stats-section-row">
+            <!-- Task Progress Ring -->
+            <div class="stats-card">
+              <span class="stats-card-label">TASK COMPLETION</span>
+              <div class="progress-ring-container">
+                <svg class="progress-ring" width="80" height="80">
+                  <circle class="progress-ring-circle-bg" stroke="rgba(255, 255, 255, 0.05)" stroke-width="5" fill="transparent" r="34" cx="40" cy="40"/>
+                  <circle id="stats-progress-ring" class="progress-ring-circle" stroke="var(--accent)" stroke-width="5" fill="transparent" r="34" cx="40" cy="40"/>
+                </svg>
+                <div id="stats-progress-text" class="progress-text">0%</div>
+              </div>
+            </div>
+
+            <!-- Daily Focus Success -->
+            <div class="stats-card reflection-card">
+              <span class="stats-card-label">DAILY FOCUS</span>
+              <p id="stats-focus-text" class="stats-focus-quote">"Stay focused today."</p>
+              <button type="button" id="stats-achieve-btn" class="achieve-btn">
+                <span class="btn-check-icon">✓</span> Mark Achieved
+              </button>
+            </div>
+          </div>
+
+          <!-- Weekly Streak Nodes -->
+          <div class="stats-card full-width">
+            <span class="stats-card-label">FOCUS STREAK (THIS WEEK)</span>
+            <div class="streak-days-container">
+              <div class="streak-day" id="streak-mon"><span class="streak-dot"></span><span class="streak-label">M</span></div>
+              <div class="streak-day" id="streak-tue"><span class="streak-dot"></span><span class="streak-label">T</span></div>
+              <div class="streak-day" id="streak-wed"><span class="streak-dot"></span><span class="streak-label">W</span></div>
+              <div class="streak-day" id="streak-thu"><span class="streak-dot"></span><span class="streak-label">T</span></div>
+              <div class="streak-day" id="streak-fri"><span class="streak-dot"></span><span class="streak-label">F</span></div>
+              <div class="streak-day" id="streak-sat"><span class="streak-dot"></span><span class="streak-label">S</span></div>
+              <div class="streak-day" id="streak-sun"><span class="streak-dot"></span><span class="streak-label">S</span></div>
+            </div>
+          </div>
+
+          <!-- Distraction Defense Chart -->
+          <div class="stats-card full-width">
+            <span class="stats-card-label">FOCUS DEFENSE (BLOCKS TODAY)</span>
+            <div id="stats-defense-chart" class="defense-chart-container">
+              <div class="no-blocks-msg" id="no-blocks-msg">No distractions blocked today. Keep it up!</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Focus mode panel (populated in Phase 3) -->
+      <div id="focus-panel" class="glass-card">
+        <div class="panel-header">
+          <h2 class="panel-title">Focus Mode</h2>
+        </div>
+        <div class="focus-mode-row">
+          <label class="toggle-switch" for="focus-toggle">
+            <input type="checkbox" id="focus-toggle">
+            <span class="toggle-track"></span>
+          </label>
+          <span id="focus-dot" class="status-dot"></span>
+          <span id="focus-status-text">Inactive</span>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Settings button (fixed bottom-right) -->
+  <button id="settings-btn" title="Settings">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="3"></circle>
+      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+    </svg>
+  </button>
+
+  <!-- Focus prompt overlay (Phase 2 — hidden by default) -->
+  <div id="focus-prompt-overlay">
+    <div id="focus-prompt-box" class="glass-card">
+      <p id="focus-prompt-question">What is your main focus today?</p>
+      <input type="text" id="focus-prompt-input" placeholder="e.g. Ship the landing page" maxlength="120" autocomplete="off">
+      <button id="focus-prompt-submit">Set Focus</button>
+    </div>
+  </div>
+
+  <!-- Settings overlay (Phase 4) -->
+  <div id="settings-overlay">
+    <div id="settings-modal" class="glass-card">
+
+      <!-- Close button -->
+      <button id="settings-close" title="Close settings">&times;</button>
+
+      <!-- Name section -->
+      <div class="settings-section">
+        <label class="settings-label" for="settings-name">Display Name</label>
+        <input type="text" id="settings-name" placeholder="Your name" maxlength="40" autocomplete="off">
+      </div>
+
+      <!-- Wallpaper section -->
+      <div class="settings-section">
+        <label class="settings-label">Wallpaper</label>
+        <div class="wallpaper-controls">
+          <input type="file" id="wallpaper-input" accept="image/*" hidden>
+          <button type="button" id="wallpaper-upload-btn" class="wallpaper-upload-btn">Choose Image</button>
+          <button id="wallpaper-clear" type="button">Remove</button>
+        </div>
+        <div id="wallpaper-preview"></div>
+      </div>
+
+      <!-- Block list section -->
+      <div class="settings-section">
+        <label class="settings-label">Custom Blocked Sites</label>
+        <div id="block-list-items"></div>
+        <div class="block-input-row">
+          <input type="text" id="block-input" placeholder="e.g. discord.com" autocomplete="off">
+          <button id="block-add-btn" type="button">+</button>
+        </div>
+      </div>
+
+      <!-- Error message (hidden by default) -->
+      <p id="settings-error" class="settings-error"></p>
+
+      <!-- Save button -->
+      <button id="settings-save" type="button">Save Settings</button>
+
+    </div>
+  </div>
+
+  <script src="newtab.js"></script>
+</body>
+</html>

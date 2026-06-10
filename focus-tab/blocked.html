@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Site Blocked — Focus Tab</title>
+
+  <!-- Same fonts as dashboard for visual consistency -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark:        #0e0d0b;
+      --bg-card:        rgba(18, 17, 15, 0.55);
+      --border-card:    rgba(255, 255, 255, 0.06);
+      --text-primary:   #f5f0e8;
+      --text-secondary: rgba(245, 240, 232, 0.55);
+      --text-muted:     rgba(245, 240, 232, 0.30);
+      --accent:         #c9a84c;
+      --font-display:   'Playfair Display', 'Georgia', serif;
+      --font-mono:      'JetBrains Mono', 'Consolas', monospace;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background-color: var(--bg-dark);
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .blocked-container {
+      text-align: center;
+      max-width: 520px;
+      padding: 64px 48px;
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+      animation: fadeScaleIn 500ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .lock-icon {
+      font-size: 3rem;
+      margin-bottom: 24px;
+      opacity: 0.7;
+      display: block;
+    }
+
+    .blocked-heading {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 500;
+      margin-bottom: 28px;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .focus-message {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-style: italic;
+      color: var(--accent);
+      margin-bottom: 12px;
+      line-height: 1.4;
+      min-height: 1.8em;
+    }
+
+    .sub-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 36px;
+    }
+
+    .blocked-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .back-link {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+      text-decoration: none;
+      padding: 8px 20px;
+      border: 1px solid var(--border-card);
+      border-radius: 8px;
+      cursor: pointer;
+      transition:
+        color 200ms ease,
+        border-color 200ms ease,
+        background 200ms ease;
+    }
+
+    .back-link:hover {
+      color: var(--text-primary);
+      border-color: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    @keyframes fadeScaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.92) translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="blocked-container">
+    <span class="lock-icon">🔒</span>
+    <h1 class="blocked-heading">This site is blocked.</h1>
+    <p class="focus-message" id="focus-message"></p>
+    <p class="sub-label">Focus Mode is active.</p>
+    <div class="blocked-actions">
+      <a class="back-link" id="go-home">← Go to Dashboard</a>
+      <a class="back-link" id="close-tab">✕ Close Tab</a>
+    </div>
+  </div>
+
+  <script src="blocked.js"></script>
+</body>
+</html>
